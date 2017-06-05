@@ -44,14 +44,14 @@ $(document).ready(function () {
         event.preventDefault();
         var email = $("#txtEmail").val().trim();
         var password = $("#txtPassword").val().trim();
-        if (validateEmail(email)) {
+        if (validateEmail(email) && validatePassword(password)) {
             var promise = auth.createUserWithEmailAndPassword(email, password);
             promise.catch(function (e) {
                 console.log("Sign up failed");
                 console.log(e.message);
             });
         } else {
-            console.log("Invalid email");
+            console.log("Invalid email or password");
         }
     });
 
