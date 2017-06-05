@@ -16,9 +16,9 @@ $(document).ready(function () {
         return re.test(email);
     }
 
-    function validatePassword(password){
+    function validatePassword(password) {
         console.log(password.length);
-        if(password.length >= 6 && password.length <= 20){
+        if (password.length >= 6 && password.length <= 20) {
             return true;
         } else {
             console.log("passwords must be between 6 and 20 characters in length");
@@ -63,12 +63,13 @@ $(document).ready(function () {
     auth.onAuthStateChanged(function (user) {
         if (user) {
             console.log(user);
-            if (window.location.pathname === "/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/index.html" || window.location.pathname === "/RPS-Multiplayer/index.html") {
+            console.log(user.email);
+            if (window.location.pathname === "/RPS-Multiplayer/" || window.location.pathname === "/RPS-Multiplayer/index.html") {
                 window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/rps.html");
             }
         } else {
             console.log("Not logged in");
-            if (window.location.pathname === "/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/rps.html" || window.location.pathname === "/RPS-Multiplayer/rps.html") {
+            if (window.location.pathname === "/RPS-Multiplayer/rps.html") {
                 window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/index.html");
             }
         }
