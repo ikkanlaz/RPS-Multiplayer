@@ -4,15 +4,22 @@ body {
 
 h1 {
     font-size: 96px;
+    text-align: center;
 }
 
 input {
+    font-family: 'Raleway', sans-serif;
     border: none;
     border-bottom: #bbbbbb solid 1px;
 }
 
 input:focus {
     outline: none;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .container-login {
@@ -29,4 +36,8 @@ input:focus {
     width: 40%;
     min-width: 45px;
     margin: 10px auto;
+}
+
+.btn {
+    font-family: 'Raleway', sans-serif;
 }
