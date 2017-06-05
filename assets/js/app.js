@@ -17,10 +17,11 @@ $(document).ready(function () {
     }
 
     function validatePassword(password){
-        if(password.length >= 6 || password.length <= 20){
+        console.log(password.length);
+        if(password.length >= 6 && password.length <= 20){
             return true;
         } else {
-            console.log("passwords must be 6 and 20 characters in length");
+            console.log("passwords must be between 6 and 20 characters in length");
             return false;
         }
     }
