@@ -1,0 +1,16 @@
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
+h1 {
+    font-size: 96px;
+}
+
+input {
+    border: none;
+    border-bottom: #bbbbbb solid 1px;
+}
+
+input:focus {
+    outline: none;
+}
