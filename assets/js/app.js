@@ -64,12 +64,12 @@ $(document).ready(function () {
         if (user) {
             console.log(user);
             if (window.location.pathname === "/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/index.html" || window.location.pathname === "/RPS-Multiplayer/index.html") {
-                window.location.replace("/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/rps.html");
+                window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/rps.html");
             }
         } else {
             console.log("Not logged in");
             if (window.location.pathname === "/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/rps.html" || window.location.pathname === "/RPS-Multiplayer/rps.html") {
-                window.location.replace("/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/index.html");
+                window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/index.html");
             }
         }
     });
