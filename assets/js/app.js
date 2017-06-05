@@ -62,12 +62,12 @@ $(document).ready(function () {
     auth.onAuthStateChanged(function (user) {
         if (user) {
             console.log(user);
-            if (window.location.pathname === "/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/index.html") {
+            if (window.location.pathname === "/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/index.html" || window.location.pathname === "RPS-Multiplayer/index.html") {
                 window.location.replace("/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/rps.html");
             }
         } else {
             console.log("Not logged in");
-            if (window.location.pathname === "/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/rps.html") {
+            if (window.location.pathname === "/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/rps.html" || window.location.pathname === "RPS-Multiplayer/rps.html") {
                 window.location.replace("/Users/andrewlazenby/Desktop/code/RPS-Multiplayer/index.html");
             }
         }
