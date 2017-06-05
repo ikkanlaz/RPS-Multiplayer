@@ -14,3 +14,19 @@ input {
 input:focus {
     outline: none;
 }
+
+.container-login {
+    max-width: 250px;
+    margin: 40px auto;
+}
+
+.input {
+    width: 100%;
+    margin: 10px auto;
+}
+
+#btnLogin, #btnSignUp {
+    width: 40%;
+    min-width: 45px;
+    margin: 10px auto;
+}
