@@ -37,7 +37,7 @@ function validatePassword(password, passwordConfirm) {
     }
 }
 
-$("#btnLogin").on("click", function () {
+$("#btn-login").on("click", function () {
     event.preventDefault();
     var email = $("#txt-email").val().trim();
     var password = $("#txt-password").val().trim();
@@ -85,7 +85,7 @@ $("#form-inputs-container").on("click", function (event) {
 });
 
 
-$("#btnLogOut").on("click", function () {
+$("#btn-log-out").on("click", function () {
     auth.signOut();
 })
 
