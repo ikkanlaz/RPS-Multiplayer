@@ -42,7 +42,8 @@ function writeUserData(userId, name) {
     console.log("userId: " + userId);
     console.log("name: " + name);
     firebase.database().ref('users/' + userId).set({
-        username: name
+        username: name,
+        online: true
     }).then(function () {
         console.log("Adding user succeeded");
     }).catch(function (error) {
@@ -59,6 +60,16 @@ function removeUserData(userId) {
         });
 }
 
+function setOnlineStatus(userId, onlineStatus) {
+    firebase.database().ref('users/' + userId).update({
+        online: onlineStatus
+    }).then(function () {
+        console.log("setting user to online status to " +  onlineStatus + " succeeded");
+    }).catch(function (error) {
+        console.log("Unable to change users online status: " + error.message);
+    });
+}
+
 $("#btn-login").on("click", function () {
     event.preventDefault();
     var email = $("#txt-email").val().trim();
@@ -67,7 +78,7 @@ $("#btn-login").on("click", function () {
         var promise = auth.signInWithEmailAndPassword(email, password);
         promise.then(function () {
             var user = firebase.auth().currentUser;
-            writeUserData(user.uid, user.displayName);
+            setOnlineStatus(user.uid, true);
         }, function (e) {
             console.log("Log in failed");
             console.log(e.message);
@@ -84,9 +95,13 @@ $("#btn-sign-up").on("click", function () {
 
 $(".close").on("click", function () {
     $("#new-user-modal").css("display", "none");
+    $("#txt-email-new-user").val("");
+    $("#txt-username-new-user").val("");
+    $("#txt-password-new-user").val("");
+    $("#txt-password-new-user-confirm").val("");
 })
 
-$("#form-inputs-container").on("click", function (event) {
+$("#btn-new-user").on("click", function (event) {
     event.preventDefault();
     var email = $("#txt-email-new-user").val().trim();
     var username = $("#txt-username-new-user").val().trim();
@@ -98,7 +113,9 @@ $("#form-inputs-container").on("click", function (event) {
             var user = firebase.auth().currentUser;
             user.updateProfile({
                 displayName: username
-            }).then(writeUserData(user.uid, user.displayName));
+            }).then(function () {
+                writeUserData(user.uid, user.displayName);
+            });
         }, function (e) {
             console.log("Sign up failed");
             console.log(e.message);
@@ -111,17 +128,15 @@ $("#form-inputs-container").on("click", function (event) {
 
 
 $("#btn-log-out").on("click", function () {
-    removeUserData(firebase.auth().currentUser.uid);
+    setOnlineStatus(firebase.auth().currentUser.uid, false);
     auth.signOut();
-})
+});
 
 auth.onAuthStateChanged(function (user) {
     if (user) {
         console.log(user);
         console.log(user.email);
         console.log(user.displayName);
-        
-
         if (window.location.pathname === "/RPS-Multiplayer/" || window.location.pathname === "/RPS-Multiplayer/index.html") {
             window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/rps.html");
         }
