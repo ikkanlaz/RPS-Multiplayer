@@ -37,13 +37,38 @@ function validatePassword(password, passwordConfirm) {
     }
 }
 
+function writeUserData(userId, name) {
+    console.log("attempting to add user data");
+    console.log("userId: " + userId);
+    console.log("name: " + name);
+    firebase.database().ref('users/' + userId).set({
+        username: name
+    }).then(function () {
+        console.log("Adding user succeeded");
+    }).catch(function (error) {
+        console.log("Unable to add user: " + error.message);
+    });
+}
+
+function removeUserData(userId) {
+    firebase.database().ref('users/' + userId).remove()
+        .then(function () {
+            console.log("Removing user succeeded");
+        }).catch(function (error) {
+            console.log("Unable to remove user: " + error.message);
+        });
+}
+
 $("#btn-login").on("click", function () {
     event.preventDefault();
     var email = $("#txt-email").val().trim();
     var password = $("#txt-password").val().trim();
     if (validateEmail(email)) {
         var promise = auth.signInWithEmailAndPassword(email, password);
-        promise.catch(function (e) {
+        promise.then(function () {
+            var user = firebase.auth().currentUser;
+            writeUserData(user.uid, user.displayName);
+        }, function (e) {
             console.log("Log in failed");
             console.log(e.message);
         });
@@ -73,7 +98,7 @@ $("#form-inputs-container").on("click", function (event) {
             var user = firebase.auth().currentUser;
             user.updateProfile({
                 displayName: username
-            });
+            }).then(writeUserData(user.uid, user.displayName));
         }, function (e) {
             console.log("Sign up failed");
             console.log(e.message);
@@ -86,6 +111,7 @@ $("#form-inputs-container").on("click", function (event) {
 
 
 $("#btn-log-out").on("click", function () {
+    removeUserData(firebase.auth().currentUser.uid);
     auth.signOut();
 })
 
@@ -93,6 +119,9 @@ auth.onAuthStateChanged(function (user) {
     if (user) {
         console.log(user);
         console.log(user.email);
+        console.log(user.displayName);
+        
+
         if (window.location.pathname === "/RPS-Multiplayer/" || window.location.pathname === "/RPS-Multiplayer/index.html") {
             window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/rps.html");
         }
