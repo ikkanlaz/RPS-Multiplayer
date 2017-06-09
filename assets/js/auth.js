@@ -43,7 +43,11 @@ function writeUserData(userId, name) {
     console.log("name: " + name);
     firebase.database().ref('users/' + userId).set({
         username: name,
-        online: true
+        online: true, 
+        inGame: false,
+        inviteSent: false,
+        wins: 0,
+        losses: 0,
     }).then(function () {
         console.log("Adding user succeeded");
     }).catch(function (error) {
