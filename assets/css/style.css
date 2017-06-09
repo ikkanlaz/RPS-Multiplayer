@@ -14,6 +14,10 @@ input {
     font-size: 14px;
 }
 
+input:focus:required:invalid {
+    border-bottom: red solid 1px;
+}
+
 input:focus {
     outline: none;
 }
@@ -33,7 +37,12 @@ input:focus {
     margin: 10px auto;
 }
 
-#btnLogin, #btnSignUp {
+.new-user-input {
+    max-width: 25em;
+    margin: 10px auto;
+}
+
+#btn-login, #btn-sign-up {
     width: 40%;
     min-width: 45px;
     margin: 10px auto;
@@ -42,4 +51,44 @@ input:focus {
 .btn {
     font-family: 'Raleway', sans-serif;
     font-size: 14px;
+}
+
+.modal {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#new-user-modal {
+    display: none;
+}
+
+.modal-content {
+    background-color: #FFFFFF;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 200px;
+    /* Could be more or less, depending on screen size */
+}
+
+.close {
+    float: right;
+    font-size: 20px;
+}
+
+.modal-header {
+    float: left;
+    font-size: 20px;
+}
+
+#form-inputs-container {
+    clear: both;
 }

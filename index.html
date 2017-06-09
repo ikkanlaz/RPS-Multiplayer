@@ -17,15 +17,29 @@
     <div class="container">
         <h1>rock, paper, scissors</h1>
         <div class="container-login">
-            <input type="email" id="txtEmail" class="input" placeholder="email">
-            <input type="password" id="txtPassword" class="input" placeholder="password">
+            <input type="email" id="txt-email" class="input" placeholder="email">
+            <input type="password" id="txt-password" class="input" placeholder="password">
             <div class="login-buttons">
-                <button type="submit" value="Submit" id="btnLogin" class="btn">log in</button>
-                <button type="submit" value="Submit" id="btnSignUp" class="btn">sign up</button>
+                <button type="submit" value="Submit" id="btn-login" class="btn">log in</button>
+                <button type="submit" value="Submit" id="btn-sign-up" class="btn">sign up</button>
+            </div>
+            <div id="new-user-modal" class="modal">
+                <div id="new-user-form" class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3 class="modal-header">create new user</h3>
+                    <form id="form-inputs-container">
+                        <input type="text" id="txt-username-new-user" class="new-user-input" placeholder="username" required pattern="[a-zA-Z0-9]{1}[a-zA-Z0-9_]{2,15}">
+                        <input type="email" id="txt-email-new-user" class="new-user-input" placeholder="email" required>
+                        <input type="password" id="txt-password-new-user" class="new-user-input" placeholder="password" required maxlength="20" minlength="6">
+                        <input type="password" id="txt-password-new-user-confirm" class="new-user-input" placeholder="confirm password" required
+                            maxlength="20" minlength="6">
+                        <button type="submit" value="Submit" id="btn-new-user" class="btn">submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/auth.js"></script>
 </body>
 
 </html>
