@@ -43,7 +43,7 @@ function writeUserData(userId, name) {
     console.log("name: " + name);
     firebase.database().ref('users/' + userId).set({
         username: name,
-        online: true, 
+        online: true,
         inGame: false,
         inviteSent: false,
         wins: 0,
@@ -68,7 +68,7 @@ function setOnlineStatus(userId, onlineStatus) {
     firebase.database().ref('users/' + userId).update({
         online: onlineStatus
     }).then(function () {
-        console.log("setting user to online status to " +  onlineStatus + " succeeded");
+        console.log("setting user to online status to " + onlineStatus + " succeeded");
     }).catch(function (error) {
         console.log("Unable to change users online status: " + error.message);
     });
@@ -113,18 +113,19 @@ $("#btn-new-user").on("click", function (event) {
     var passwordConfirm = $("#txt-password-new-user-confirm").val().trim();
     if (validateEmail(email) && validatePassword(password, passwordConfirm) && validateUserName(username)) {
         var promise = auth.createUserWithEmailAndPassword(email, password);
-        promise.then(function () {
+        var newUserPromise = promise.then(function () {
             var user = firebase.auth().currentUser;
             user.updateProfile({
                 displayName: username
-            }).then(function () {
-                writeUserData(user.uid, user.displayName);
             });
         }, function (e) {
             console.log("Sign up failed");
             console.log(e.message);
         });
-
+        newUserPromise.then(function () {
+            writeUserData(user.uid, user.displayName);
+            setOnlineStatus(user.uid, true);
+        });
     } else {
         console.log("Invalid email or password");
     }
