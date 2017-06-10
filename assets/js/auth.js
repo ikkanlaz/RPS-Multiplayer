@@ -48,11 +48,11 @@ function writeUserData(userId, name) {
         inviteSent: false,
         totalWins: 0,
         totalLosses: 0,
-        currentOpponent: null,
+        currentOpponentUid: null,
         currentGameWins: 0,
         currentGameLosses: 0,
-        weaponSelected: null,
-        opponentWeaponSelected: null
+        optionSelected: null,
+        opponentOptionSelected: null
     }).then(function () {
         console.log("Adding user succeeded");
     }).catch(function (error) {
