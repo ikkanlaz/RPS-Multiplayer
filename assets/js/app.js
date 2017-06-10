@@ -29,6 +29,24 @@ $(document).ready(function () {
     });
 });
 
+auth.onAuthStateChanged(function (user) {
+    if (user) {
+        console.log(user);
+        console.log(user.email);
+        console.log(user.displayName);
+        if (user.displayName) {
+            if (window.location.pathname === "/RPS-Multiplayer/" || window.location.pathname === "/RPS-Multiplayer/index.html") {
+                window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/rps.html");
+            }
+        }
+    } else {
+        console.log("Not logged in");
+        if (window.location.pathname === "/RPS-Multiplayer/rps.html") {
+            window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/index.html");
+        }
+    }
+});
+
 $(".user-row").on("click", function () {
     //set a new field in db like inviteSent: true
     //validate that inGame and inviteSent are both false for this current user and selected user

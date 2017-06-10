@@ -69,6 +69,7 @@ function setOnlineStatus(userId, onlineStatus) {
         online: onlineStatus
     }).then(function () {
         console.log("setting user to online status to " + onlineStatus + " succeeded");
+
     }).catch(function (error) {
         console.log("Unable to change users online status: " + error.message);
     });
@@ -83,6 +84,7 @@ $("#btn-login").on("click", function () {
         promise.then(function () {
             var user = firebase.auth().currentUser;
             setOnlineStatus(user.uid, true);
+            window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/rps.html");
         }, function (e) {
             console.log("Log in failed");
             console.log(e.message);
@@ -113,19 +115,21 @@ $("#btn-new-user").on("click", function (event) {
     var passwordConfirm = $("#txt-password-new-user-confirm").val().trim();
     if (validateEmail(email) && validatePassword(password, passwordConfirm) && validateUserName(username)) {
         var promise = auth.createUserWithEmailAndPassword(email, password);
-        var newUserPromise = promise.then(function () {
+        promise.then(function () {
             var user = firebase.auth().currentUser;
             user.updateProfile({
                 displayName: username
+            }).then(function () {
+                console.log("write user data");
+                var user = firebase.auth().currentUser;
+                writeUserData(user.uid, user.displayName);
+                setOnlineStatus(user.uid, true);
+                window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/rps.html");
             });
         }, function (e) {
             console.log("Sign up failed");
             console.log(e.message);
-        });
-        newUserPromise.then(function () {
-            writeUserData(user.uid, user.displayName);
-            setOnlineStatus(user.uid, true);
-        });
+        })
     } else {
         console.log("Invalid email or password");
     }
@@ -137,20 +141,23 @@ $("#btn-log-out").on("click", function () {
     auth.signOut();
 });
 
-auth.onAuthStateChanged(function (user) {
-    if (user) {
-        console.log(user);
-        console.log(user.email);
-        console.log(user.displayName);
-        if (window.location.pathname === "/RPS-Multiplayer/" || window.location.pathname === "/RPS-Multiplayer/index.html") {
-            window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/rps.html");
-        }
-    } else {
-        console.log("Not logged in");
-        if (window.location.pathname === "/RPS-Multiplayer/rps.html") {
-            window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/index.html");
-        }
-    }
-});
+// database.ref("users/"+ firebase.auth().currentUser.uid).on('child_added', function (childSnapshot) {
+//     var user = firebase.auth().currentUser;
+//     if (user) {
+//         console.log(user);
+//         console.log(user.email);
+//         console.log(user.displayName);
+//         if (childSnapshot.displayName) {
+//             if (window.location.pathname === "/RPS-Multiplayer/" || window.location.pathname === "/RPS-Multiplayer/index.html") {
+//                 window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/rps.html");
+//             }
+//         }
+//     } else {
+//         console.log("Not logged in");
+//         if (window.location.pathname === "/RPS-Multiplayer/rps.html") {
+//             window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/index.html");
+//         }
+//     }
+// })
 
 
