@@ -15,14 +15,46 @@
 <body>
 
     <div class="container">
-        <h1>rock, paper, scissors</h1>
-        <table id="user-list">
-            <tr id="user-list-header-row">
-                <th>User</th>
-                <th>Status</th>
-            </tr>
-        </table>
-        <button id="btn-log-out" class="btn">log out</button>
+        <div id="header">
+            <button id="btn-log-out" class="btn">log out</button>
+            <h1 id="headline">rock, paper, scissors</h1>
+        </div>
+        <div id="content">
+            <div id="game-container">
+                <h2 class="game-title">select a user to start</h2>
+                <div class="img-container hide">
+                    <img class="rps-image" src="assets/images/Rock.svg" alt="rock">
+                    <img class="rps-image" src="assets/images/Paper.svg" alt="paper">
+                    <img class="rps-image" src="assets/images/Scissors.svg" alt="scissors">
+                </div>
+            </div>
+            <table id="user-list">
+                <tr id="user-list-header-row">
+                    <th>User</th>
+                    <th>Status</th>
+                </tr>
+            </table>
+        </div>
+        <div class="modal modal--error">
+            <div class="modal-content modal-content--error">
+                <span class="close">&times;</span>
+                <p class="error-message"></p>
+            </div>
+        </div>
+        <div class="modal modal--invite">
+            <div class="modal-content modal-content--invite">
+                <span class="close">&times;</span>
+                <h3 class="modal-heading">someone invited you to play</h3>
+                <button class="btn btn--accept">accept</button>
+                <button class="btn btn--reject">reject</button>
+            </div>
+        </div>
+        <div class="modal modal--invite-sent">
+            <div class="modal-content modal-content--invite-sent">
+                <h3 class="modal-heading">invitation sent</h3>
+                <button class="btn btn--cancel">cancel invitation</button>
+            </div>
+        </div>
     </div>
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/app.js"></script>

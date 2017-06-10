@@ -45,6 +45,7 @@ function writeUserData(userId, name) {
         username: name,
         online: true,
         inGame: false,
+        inviteReceived: false,
         inviteSent: false,
         totalWins: 0,
         totalLosses: 0,
