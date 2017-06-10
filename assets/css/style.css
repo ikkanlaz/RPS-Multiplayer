@@ -55,7 +55,7 @@ input:focus {
 
 .modal {
     position: fixed;
-    z-index: 2;
+    z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
@@ -68,6 +68,11 @@ input:focus {
     display: none;
 }
 
+.modal--error {
+    z-index: 2;
+    display: none;
+}
+
 .modal-content {
     background-color: #FFFFFF;
     margin: 15% auto;
@@ -77,6 +82,12 @@ input:focus {
     width: 80%;
     max-width: 200px;
     /* Could be more or less, depending on screen size */
+}
+
+.modal-content--error {
+    border: 1px solid red;
+    width: 90%;
+    max-width: 220px;
 }
 
 .close {

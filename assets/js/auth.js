@@ -28,11 +28,11 @@ function validatePassword(password, passwordConfirm) {
         if (password === passwordConfirm) {
             return true;
         } else {
-            console.log("passwords do not match");
+            addErrorModal("passwords do not match");
             return false;
         }
     } else {
-        console.log("passwords must be between 6 and 20 characters in length");
+        addErrorModal("passwords must be between 6 and 20 characters in length");
         return false;
     }
 }
@@ -52,6 +52,7 @@ function writeUserData(userId, name) {
         console.log("Adding user succeeded");
     }).catch(function (error) {
         console.log("Unable to add user: " + error.message);
+        addErrorModal(error.message);
     });
 }
 
@@ -61,6 +62,7 @@ function removeUserData(userId) {
             console.log("Removing user succeeded");
         }).catch(function (error) {
             console.log("Unable to remove user: " + error.message);
+            addErrorModal(error.message);
         });
 }
 
@@ -72,7 +74,13 @@ function setOnlineStatus(userId, onlineStatus) {
 
     }).catch(function (error) {
         console.log("Unable to change users online status: " + error.message);
+        addErrorModal(error.message);
     });
+}
+
+function addErrorModal(message){
+    $(".error-message").text(message);
+    $(".modal--error").css("display", "block");
 }
 
 $("#btn-login").on("click", function () {
@@ -88,10 +96,11 @@ $("#btn-login").on("click", function () {
         }, function (e) {
             console.log("Log in failed");
             console.log(e.message);
+            addErrorModal(e.message);
         });
         console.log(auth.currentUser);
     } else {
-        console.log("Invalid email");
+        addErrorModal("Invalid email provided");
     }
 });
 
@@ -100,9 +109,7 @@ $("#btn-sign-up").on("click", function () {
 });
 
 $(".close").on("click", function () {
-    $("#new-user-modal").css("display", "none");
-    $("#txt-email-new-user").val("");
-    $("#txt-username-new-user").val("");
+    $(this).parent().parent().css("display", "none");
     $("#txt-password-new-user").val("");
     $("#txt-password-new-user-confirm").val("");
 })
@@ -129,9 +136,8 @@ $("#btn-new-user").on("click", function (event) {
         }, function (e) {
             console.log("Sign up failed");
             console.log(e.message);
+            addErrorModal(e.message);
         })
-    } else {
-        console.log("Invalid email or password");
     }
 });
 
@@ -140,6 +146,8 @@ $("#btn-log-out").on("click", function () {
     setOnlineStatus(firebase.auth().currentUser.uid, false);
     auth.signOut();
 });
+
+
 
 // database.ref("users/"+ firebase.auth().currentUser.uid).on('child_added', function (childSnapshot) {
 //     var user = firebase.auth().currentUser;
