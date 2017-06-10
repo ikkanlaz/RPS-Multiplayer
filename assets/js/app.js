@@ -22,7 +22,7 @@ $(document).ready(function () {
     var users = ref.child("users");
     users.once("value").then(function (snapshot) {
         snapshot.forEach(function (user) {
-            if (user.child("online").val() === true) {
+            if (user.child("online").val() === true && firebase.auth().currentUser.uid !== user.key) {
                 addUserToOnlineList(user);
             }
         });

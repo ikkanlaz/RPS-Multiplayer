@@ -148,24 +148,3 @@ $("#btn-log-out").on("click", function () {
 });
 
 
-
-// database.ref("users/"+ firebase.auth().currentUser.uid).on('child_added', function (childSnapshot) {
-//     var user = firebase.auth().currentUser;
-//     if (user) {
-//         console.log(user);
-//         console.log(user.email);
-//         console.log(user.displayName);
-//         if (childSnapshot.displayName) {
-//             if (window.location.pathname === "/RPS-Multiplayer/" || window.location.pathname === "/RPS-Multiplayer/index.html") {
-//                 window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/rps.html");
-//             }
-//         }
-//     } else {
-//         console.log("Not logged in");
-//         if (window.location.pathname === "/RPS-Multiplayer/rps.html") {
-//             window.location.replace("https://ikkanlaz.github.io/RPS-Multiplayer/index.html");
-//         }
-//     }
-// })
-
-
