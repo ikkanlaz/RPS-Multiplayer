@@ -46,8 +46,13 @@ function writeUserData(userId, name) {
         online: true,
         inGame: false,
         inviteSent: false,
-        wins: 0,
-        losses: 0,
+        totalWins: 0,
+        totalLosses: 0,
+        currentOpponent: null,
+        currentGameWins: 0,
+        currentGameLosses: 0,
+        weaponSelected: null,
+        opponentWeaponSelected: null
     }).then(function () {
         console.log("Adding user succeeded");
     }).catch(function (error) {

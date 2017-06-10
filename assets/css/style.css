@@ -103,3 +103,27 @@ input:focus {
 #form-inputs-container {
     clear: both;
 }
+
+
+#user-list-header-row {
+    border-bottom: 1px solid #bbbbbb;
+}
+
+th {
+    font-size: 25px;
+    font-weight: bolder;
+    padding: 10px 30px;
+}
+
+td {
+    padding: 10px 30px;
+    /*text-align: center;*/
+}
+
+#user-list {
+    border: 1px solid black;
+    padding: 10px;
+}
+.user-row:hover {
+    background-color: #eeeeee;
+}
