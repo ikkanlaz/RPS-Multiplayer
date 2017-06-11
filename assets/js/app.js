@@ -42,8 +42,8 @@ function loadGameScreen() {
     $(".game-title").text("select one");
 }
 
-function removeInviteData(){
-     var ref = firebase.database().ref();
+function removeInviteData() {
+    var ref = firebase.database().ref();
     var opponentUid;
     var currentUserObj = firebase.auth().currentUser;
 
@@ -210,5 +210,5 @@ $(document).on("click", "#reject-invitation-button", function () {
 
 $(document).on("click", "#cancel-invitation-button", function () {
     $(this).parent().parent().css("display", "none");
-
+    removeInviteData();
 });
