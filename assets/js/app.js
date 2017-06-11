@@ -143,7 +143,7 @@ function displayResults(optionSelected, opponentOptionSelected) {
     else if (optionSelected === opponentOptionSelected) {
         updateScore("currentGameTies");
     }
-
+    displayScoreModal();
 }
 
 // var ref = firebase.database().ref();
