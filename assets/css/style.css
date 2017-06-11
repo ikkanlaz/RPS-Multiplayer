@@ -111,6 +111,16 @@ input:focus {
     display: none;
 }
 
+.modal--win {
+    z-index: 2;
+    display: none;
+}
+
+.modal--lose {
+    z-index: 2;
+    display: none;
+}
+
 .modal-content {
     background-color: #FFFFFF;
     margin: 15% auto;
@@ -128,17 +138,7 @@ input:focus {
     max-width: 220px;
 }
 
-.modal-content--invite {
-    width: 95%;
-    max-width: 400px;
-}
-
-.modal-content--invite-sent {
-    width: 95%;
-    max-width: 400px;
-}
-
-.modal-content--score {
+.modal-content--score, .modal-content--win, .modal-content--lose, .modal-content--invite-sent, .modal-content--invite {
     width: 95%;
     max-width: 400px;
 }
