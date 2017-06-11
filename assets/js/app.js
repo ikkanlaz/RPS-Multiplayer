@@ -133,7 +133,7 @@ $(document).on("click", "#accept-invitation-button", function () {
     $(this).parent().parent().css("display", "none");
     var ref = firebase.database().ref();
     var opponentUid;
-    var userObj = firebase.auth().currentUser;
+    var currentUserObj = firebase.auth().currentUser;
 
     var opponentQuery = ref.child("users/" + currentUserObj.uid + "/currentOpponentUid");
     opponentQuery.once("value", function (snapshot) {
