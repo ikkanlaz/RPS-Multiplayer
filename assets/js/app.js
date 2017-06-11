@@ -114,6 +114,7 @@ firebase.auth().onAuthStateChanged(function (currentUserObj) {
             if (snapshot.val() === true) {
                 displayInvitation();
             } else {
+                console.log("hiding invitation modals");
                 hideInvitationModal();
             }
         });
@@ -124,6 +125,7 @@ firebase.auth().onAuthStateChanged(function (currentUserObj) {
             if (snapshot.val() === true) {
                 displayModalForSentInvitation();
             } else {
+                console.log("hiding invitation modals");
                 hideInvitationModal();
             }
         });
