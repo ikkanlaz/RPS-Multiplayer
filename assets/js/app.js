@@ -82,10 +82,10 @@ function updateScore(keyToBeIncremented) {
 
     var databaseRef = firebase.database().ref('users').child(currentUserObj.uid).child(keyToBeIncremented);
 
-    databaseRef.transaction(function (keyToBeIncremented) {
-        console.log(keyToBeIncremented);
-        if (keyToBeIncremented || 0) {
-            keyToBeIncremented = keyToBeIncremented + 1;
+    databaseRef.transaction(function (key) {
+        console.log(key);
+        if (key || 0) {
+            keyToBeIncremented = key + 1;
             console.log(keyToBeIncremented);
         }
         return keyToBeIncremented;
