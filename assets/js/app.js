@@ -138,7 +138,7 @@ firebase.auth().onAuthStateChanged(function (currentUserObj) {
         inGame.on("value", function (snapshot) {
             console.log(snapshot.val());
             if (snapshot.val() === true) {
-                hideInvitationModal();
+                hideModalForSentInvitation();
                 loadGameScreen();
             }
         });
