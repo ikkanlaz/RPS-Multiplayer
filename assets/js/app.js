@@ -121,7 +121,9 @@ firebase.auth().onAuthStateChanged(function (currentUserObj) {
         var inviteSent = ref.child("users/" + currentUserObj.uid + "/inviteSent");
         inviteSent.on("value", function (snapshot) {
             console.log(snapshot.val());
-            if (snapshot.val() === false) {
+            if (snapshot.val() === true) {
+                displayModalForSentInvitation();
+            } else {
                 hideInvitationModal();
             }
         });
