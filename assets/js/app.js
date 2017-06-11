@@ -188,7 +188,7 @@ function endGame() {
 }
 
 function displayResults(optionSelected, opponentOptionSelected) {
-
+    refreshSelections();
     // This logic determines the outcome of the game (win/loss/tie), and increments the appropriate counter.
     if ((optionSelected === "rock") && (opponentOptionSelected === "scissors")) {
         updateScore("currentGameWins");
@@ -211,7 +211,6 @@ function displayResults(optionSelected, opponentOptionSelected) {
     else if (optionSelected === opponentOptionSelected) {
         updateScore("currentGameTies");
     }
-    refreshSelections();
     prepareScoreModal();
 }
 
