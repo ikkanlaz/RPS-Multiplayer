@@ -156,14 +156,14 @@ function refreshSelections() {
         database.ref('users/' + currentUserObj.uid).update({
             optionSelected: "",
             opponentOptionSelected: ""
-        }).then(function () {
-            database.ref('users/' + opponentUid).update({
-                optionSelected: "",
-                opponentOptionSelected: ""
-            }).catch(function (error) {
-                console.log("Unable to update opponents record" + error.message);
-                addErrorModal(error.message);
-            });
+        // }).then(function () {
+        //     database.ref('users/' + opponentUid).update({
+        //         optionSelected: "",
+        //         opponentOptionSelected: ""
+        //     }).catch(function (error) {
+        //         console.log("Unable to update opponents record" + error.message);
+        //         addErrorModal(error.message);
+        //     });
         }).catch(function (error) {
             console.log("Unable to update own record: " + error.message);
             addErrorModal(error.message);
