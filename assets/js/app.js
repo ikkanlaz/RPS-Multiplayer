@@ -76,6 +76,55 @@ function removeInviteData() {
     });
 }
 
+function updateScore(keyToBeIncremented) {
+    var ref = firebase.database().ref();
+    var opponentUid;
+    var currentUserObj = firebase.auth().currentUser;
+
+    database.ref('users/' + currentUserObj.uid).update({
+        keyToBeIncremented: keyToBeIncremented()++
+    }).then(function () {
+        database.ref('users/' + opponentUid).update({
+            currentOpponentUid: userObj.uid,
+            inviteReceived: true
+        }).then(function () {
+            displayModalForSentInvitation();
+        }).catch(function (error) {
+            console.log("Unable to update opponents record" + error.message);
+            addErrorModal(error.message);
+        });
+    }).catch(function (error) {
+        console.log("Unable to own record: " + error.message);
+        addErrorModal(error.message);
+    });
+}
+
+function displayResults(optionSelected, opponentOptionSelected) {
+
+    // This logic determines the outcome of the game (win/loss/tie), and increments the appropriate counter.
+    if ((optionSelected === "rock") && (opponentOptionSelected === "scissors")) {
+        updateScore("currentGameWins");
+    }
+    else if ((optionSelected === "rock") && (opponentOptionSelected === "paper")) {
+        updateScore("currentGameLosses");
+    }
+    else if ((optionSelected === "scissors") && (opponentOptionSelected === "rock")) {
+        updateScore("currentGameLosses");
+    }
+    else if ((optionSelected === "scissors") && (opponentOptionSelected === "paper")) {
+        updateScore("currentGameWins");
+    }
+    else if ((optionSelected === "paper") && (opponentOptionSelected === "rock")) {
+        updateScore("currentGameWins");
+    }
+    else if ((optionSelected === "paper") && (opponentOptionSelected === "scissors")) {
+        updateScore("currentGameLosses");
+    }
+    else if (optionSelected === opponentOptionSelected) {
+        updateScore("currentGameTies");
+    }
+}
+
 // var ref = firebase.database().ref();
 // var currentUserObj = firebase.auth().currentUser;
 // console.log(currentUserObj);
@@ -253,7 +302,7 @@ $(document).on("click", ".rps-image", function () {
         console.log(snapshot.val());
         opponentOptionSelected = snapshot.val();
         if (snapshot.val()) {
-            displayResults(objectSelected, opponentOptionSelected);
+            displayResults(objectSelectedInput, opponentOptionSelected);
         }
     });
 
