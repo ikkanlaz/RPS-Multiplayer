@@ -81,15 +81,15 @@ function updateScore(keyToBeIncremented) {
     var currentUserObj = firebase.auth().currentUser;
     console.log(keyToBeIncremented);
 
-    var databaseRef = firebase.database().ref('users').child(currentUserObj.uid).child(keyToBeIncremented);
+    var databaseRef = firebase.database().ref('users').child(currentUserObj.uid);
     console.log(databaseRef);
-    databaseRef.transaction(function (keyl) {
-        console.log(keyl);
-        if (keyl || 0) {
-            keyl = keyl + 1;
-            console.log(keyl);
+    databaseRef.transaction(function (keyToBeIncremented) {
+        console.log(keyToBeIncremented);
+        if (keyToBeIncremented || 0) {
+            keyToBeIncremented = keyToBeIncremented + 1;
+            console.log(keyToBeIncremented);
         }
-        return keyl;
+        return keyToBeIncremented;
     }, function () {
 
     }).catch(function (error) {
