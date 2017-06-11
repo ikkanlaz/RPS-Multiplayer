@@ -95,7 +95,7 @@ function loadGameScreen() {
     $(".game-title").text("Select One");
 }
 
-function loadMenuScree() {
+function loadMenuScreen() {
     $("#rps-images").css("display", "none");
     $(".game-title").text("Select A User To Start");
 }
@@ -389,4 +389,5 @@ $(document).on("click", ".btn--new-game", function () {
     $("#scissors").css("visibility", "inherit");
     updateScore(result);
     endGame();
+    loadMenuScreen();
 });
