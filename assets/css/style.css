@@ -191,7 +191,7 @@ td {
 
 .img-container {
     display: grid;
-    grid-gap: 20px;
+    grid-gap: 40px;
     grid-template-columns: 1fr 1fr 1fr;
     padding: 20px;
 }
