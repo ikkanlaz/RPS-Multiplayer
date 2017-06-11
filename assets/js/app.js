@@ -80,15 +80,16 @@ function updateScore(keyToBeIncremented) {
     var opponentUid;
     var currentUserObj = firebase.auth().currentUser;
 
-    // Increment Ada's rank by 1.
-    var keyToBeIncrementedRef = database.ref('users/' + currentUserObj.uid + '/' + keyToBeIncremented);
-    keyToBeIncrementedRef.transaction(function (keyToBeIncremented) {
-        if (keyToBeIncremented || 0) {
+    var databaseRef = firebase.database().ref('users').child(currentUserObj.uid).child(keyToBeIncremented);
+
+    databaseRef.transaction(function (keyToBeIncremented) {
+
+        if (keyToBeIncremented) {
             keyToBeIncremented = keyToBeIncremented + 1;
         }
         return keyToBeIncremented;
     }, function () {
-    
+
     }).catch(function (error) {
         console.log("Unable to own record: " + error.message);
         addErrorModal(error.message);
