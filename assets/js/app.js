@@ -40,21 +40,21 @@ function hideModalForInvitation() {
     $(".modal--invite").css("display", "none");
 }
 
-function displayScoreModal() {
+function displayScoreModal(win, lose, tie) {
     console.log("show score modal");
     $(".win-score").text("Wins: " + win);
     $(".lose-score").text("Losses: " + lose);
     $(".tie-score").text("Ties: " + tie);
     $(".modal--score").css("display", "block");
 }
-function displayWinModal() {
+function displayWinModal(win, lose, tie) {
     console.log("show win modal");
     $(".win-score").text("Wins: " + win);
     $(".lose-score").text("Losses: " + lose);
     $(".tie-score").text("Ties: " + tie);
     $(".modal--win").css("display", "block");
 }
-function displayLoseModal() {
+function displayLoseModal(win, lose, tie) {
     console.log("show lose modal");
     $(".win-score").text("Wins: " + win);
     $(".lose-score").text("Losses: " + lose);
@@ -76,11 +76,11 @@ function prepareScoreModal() {
         lose = snapshot.val().currentGameLosses;
         tie = snapshot.val().currentGameTies;
         if (win > 2) {
-            displayWinModal();
+            displayWinModal(win, lose, tie);
         } else if (lose > 2) {
-            displayLoseModal();
+            displayLoseModal(win, lose, tie);
         } else {
-            displayScoreModal();
+            displayScoreModal(win, lose, tie);
         }
     }).catch(function (error) {
         console.log("Unable to get score: " + error.message);
