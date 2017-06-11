@@ -86,11 +86,6 @@ function updateScore(keyToBeIncremented) {
     databaseRef.transaction(function (keyToBeIncremented) {
         console.log(keyToBeIncremented);
         return (keyToBeIncremented || 0) + 1;
-    }, function () {
-
-    }).catch(function (error) {
-        console.log("Unable to own record: " + error.message);
-        addErrorModal(error.message);
     });
 }
 
