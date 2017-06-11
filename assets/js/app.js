@@ -221,7 +221,7 @@ $(document).on("click", "#cancel-invitation-button", function () {
 });
 
 $(document).on("click", ".rps-image", function () {
-    var objectSelected = $(this).data("option");
+    var objectSelectedInput = $(this).data("option");
     var opponentOptionSelected;
     var opponentUid;
     var currentUserObj = firebase.auth().currentUser;
@@ -234,10 +234,10 @@ $(document).on("click", ".rps-image", function () {
     }).then(function () {
         console.log(opponentUid);
         database.ref('users/' + currentUserObj.uid).update({
-            optionSelected: objectSelected
+            optionSelected: objectSelectedInput
         }).then(function () {
             database.ref('users/' + opponentUid).update({
-                opponentOptionSelected: optionSelected
+                opponentOptionSelected: objectSelectedInput
             }).catch(function (error) {
                 console.log("Unable to update opponents record" + error.message);
                 addErrorModal(error.message);

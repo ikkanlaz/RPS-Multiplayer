@@ -52,8 +52,8 @@ function writeUserData(userId, name) {
         currentOpponentUid: null,
         currentGameWins: 0,
         currentGameLosses: 0,
-        optionSelected: null,
-        opponentOptionSelected: null
+        optionSelected: "",
+        opponentOptionSelected: ""
     }).then(function () {
         console.log("Adding user succeeded");
     }).catch(function (error) {
