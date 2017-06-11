@@ -49,9 +49,10 @@ function displayScoreModal() {
     var tie = 0;
     scoreQuery.once("value", function (snapshot) {
         console.log(snapshot.val());
-        win = snapshot.currentGameWins.val();
-        lose = snapshot.currentGameLosses.val();
-        tie = snapshot.currentGameTies.val();
+        console.log(snapshot.currentGameWins);
+        win = snapshot.currentGameWins;
+        lose = snapshot.currentGameLosses;
+        tie = snapshot.currentGameTies;
     }).then(function () {
         console.log("show score modal");
         $(".win-score").text("Wins: " + win);
