@@ -219,3 +219,41 @@ $(document).on("click", "#cancel-invitation-button", function () {
     $(this).parent().parent().css("display", "none");
     removeInviteData();
 });
+
+$(document).on("click", ".rps-image", function () {
+    var objectSelected = $(this).data("option");
+    var opponentOptionSelected;
+    var opponentUid;
+    var currentUserObj = firebase.auth().currentUser;
+
+    var opponentQuery = ref.child("users/" + currentUserObj.uid + "/currentOpponentUid");
+    opponentQuery.once("value", function (snapshot) {
+        console.log(snapshot.val());
+        opponentUid = snapshot.val();
+    }).then(function () {
+        console.log(opponentUid);
+        database.ref('users/' + currentUserObj.uid).update({
+            optionSelected: objectSelected
+        }).then(function () {
+            database.ref('users/' + opponentUid).update({
+                opponentOptionSelected: optionSelected
+            }).catch(function (error) {
+                console.log("Unable to update opponents record" + error.message);
+                addErrorModal(error.message);
+            });
+        }).catch(function (error) {
+            console.log("Unable to update option selected: " + error.message);
+            addErrorModal(error.message);
+        });
+    });
+
+    var opponentReady = ref.child("users/" + currentUserObj.uid + "/opponentOptionSelected");
+    opponentReady.on("value", function (snapshot) {
+        console.log(snapshot.val());
+        opponentOptionSelected = snapshot.val();
+        if (snapshot.val()) {
+            displayResults(objectSelected, opponentOptionSelected);
+        }
+    });
+
+});
