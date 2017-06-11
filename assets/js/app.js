@@ -140,6 +140,7 @@ $(document).on("click", "#accept-invitation-button", function () {
         console.log(snapshot.val());
         opponentUid = snapshot.val();
     }).then(function () {
+        console.log(opponentUid);
         database.ref('users/' + currentUserObj.uid).update({
             inGame: true,
             inviteReceived: false,
