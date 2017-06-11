@@ -49,10 +49,10 @@ function displayScoreModal() {
     var tie = 0;
     scoreQuery.once("value", function (snapshot) {
         console.log(snapshot.val());
-        console.log(snapshot.currentGameWins);
-        win = snapshot.currentGameWins;
-        lose = snapshot.currentGameLosses;
-        tie = snapshot.currentGameTies;
+        console.log(snapshot.val().currentGameWins);
+        win = snapshot.val().currentGameWins;
+        lose = snapshot.val().currentGameLosses;
+        tie = snapshot.val().currentGameTies;
     }).then(function () {
         console.log("show score modal");
         $(".win-score").text("Wins: " + win);
@@ -293,8 +293,8 @@ $(document).on("click", "#cancel-invitation-button", function () {
 
 $(document).on("click", ".rps-image", function () {
     var objectSelectedInput = $(this).data("option");
-    $(".rps-image").css("display", "none");
-    $("#" + objectSelectedInput).css("display", "block");
+    $(".rps-image").css("visibility", "hidden");
+    $("#" + objectSelectedInput).css("visibility", "visible");
     var opponentOptionSelected;
     var opponentUid;
     var currentUserObj = firebase.auth().currentUser;
