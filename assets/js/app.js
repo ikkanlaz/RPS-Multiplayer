@@ -127,21 +127,35 @@ $(document).on("click", ".user-row", function () {
         console.log("Unable to own record: " + error.message);
         addErrorModal(error.message);
     });
-
-
-
-
-
-    //set a new field in db like inviteSent: true
-    //validate that inGame and inviteSent are both false for this current user and selected user
-    //set inviteSent to true for both
-    //maybe set a timeout?
-    //
 });
 
 $(document).on("click", "#accept-invitation-button", function () {
     $(this).parent().parent().css("display", "none");
-    loadGameScreen();
+    var ref = firebase.database().ref();
+    var opponentUid;
+    var userObj = firebase.auth().currentUser;
+
+    var opponentQuery = ref.child("users/" + currentUserObj.uid + "/currentOpponentUid");
+    opponentQuery.once("value", function (snapshot) {
+        console.log(snapshot.val());
+        opponentUid = snapshot.val();
+    }).then(function () {
+        database.ref('users/' + userObj.uid).update({
+            inGame: true
+        }).then(function () {
+            database.ref('users/' + opponentUid).update({
+                inGame: true
+            }).catch(function (error) {
+                console.log("Unable to update opponents record" + error.message);
+                addErrorModal(error.message);
+            });
+        }).catch(function (error) {
+            console.log("Unable to update own record: " + error.message);
+            addErrorModal(error.message);
+        });
+        loadGameScreen();
+    });
+
 });
 
 $(document).on("click", "#reject-invitation-button", function () {
