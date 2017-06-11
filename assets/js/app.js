@@ -261,6 +261,8 @@ $(document).on("click", "#cancel-invitation-button", function () {
 
 $(document).on("click", ".rps-image", function () {
     var objectSelectedInput = $(this).data("option");
+    $(".rps-image").css("display", "none");
+    $("#" + objectSelectedInput).css("display", "block");
     var opponentOptionSelected;
     var opponentUid;
     var currentUserObj = firebase.auth().currentUser;
