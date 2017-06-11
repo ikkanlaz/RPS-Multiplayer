@@ -77,9 +77,17 @@ function removeInviteData() {
 }
 
 function updateScore(keyToBeIncremented) {
-    var ref = firebase.database().ref();
     var opponentUid;
     var currentUserObj = firebase.auth().currentUser;
+
+    // Increment Ada's rank by 1.
+    var keyToBeIncrementedRef = database.ref('users/' + currentUserObj.uid + '/' + keyToBeIncremented);
+    keyToBeIncrementedRef.transaction(function (keyToBeIncremented) {
+        if (keyToBeIncremented || 0) {
+            keyToBeIncremented = keyToBeIncremented + 1;
+        }
+        return keyToBeIncremented;
+    });
 
     database.ref('users/' + currentUserObj.uid).update({
         keyToBeIncremented: keyToBeIncremented()++
