@@ -88,15 +88,7 @@ function updateScore(keyToBeIncremented) {
         }
         return keyToBeIncremented;
     }, function () {
-        database.ref('users/' + opponentUid).update({
-            currentOpponentUid: userObj.uid,
-            inviteReceived: true
-        }).then(function () {
-            displayModalForSentInvitation();
-        }).catch(function (error) {
-            console.log("Unable to update opponents record" + error.message);
-            addErrorModal(error.message);
-        });
+    
     }).catch(function (error) {
         console.log("Unable to own record: " + error.message);
         addErrorModal(error.message);
