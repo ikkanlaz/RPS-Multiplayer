@@ -87,11 +87,7 @@ function updateScore(keyToBeIncremented) {
             keyToBeIncremented = keyToBeIncremented + 1;
         }
         return keyToBeIncremented;
-    });
-
-    database.ref('users/' + currentUserObj.uid).update({
-        keyToBeIncremented: keyToBeIncremented()++
-    }).then(function () {
+    }, function () {
         database.ref('users/' + opponentUid).update({
             currentOpponentUid: userObj.uid,
             inviteReceived: true
