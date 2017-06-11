@@ -37,6 +37,11 @@ function hideInvitationModal() {
     $(".modal--invite").css("display", "none");
 }
 
+function loadGameScreen() {
+    $("#rps-images").css("display", "block");
+    $(".game-title").text("select one");
+}
+
 
 // var ref = firebase.database().ref();
 // var currentUserObj = firebase.auth().currentUser;
@@ -86,10 +91,7 @@ firebase.auth().onAuthStateChanged(function (currentUserObj) {
             console.log(snapshot.val());
             if (snapshot.val() === true) {
                 hideInvitationModal();
-                var opponentOptionSelected = ref.child("users/" + currentUserObj.uid + "/opponentOptionSelected");
-                opponentOptionSelected.on("value", function (snapshot) {
-                    checkWin(snapshot.val());
-                });
+                loadGameScreen();
             }
         });
     } else {
@@ -129,9 +131,25 @@ $(document).on("click", ".user-row", function () {
 
 
 
+
     //set a new field in db like inviteSent: true
     //validate that inGame and inviteSent are both false for this current user and selected user
     //set inviteSent to true for both
     //maybe set a timeout?
     //
-})
+});
+
+$(document).on("click", "#accept-invitation-button", function () {
+    $(this).parent().parent().css("display", "none");
+    loadGameScreen();
+});
+
+$(document).on("click", "#reject-invitation-button", function () {
+    $(this).parent().parent().css("display", "none");
+    removeInviteData();
+});
+
+$(document).on("click", "#cancel-invitation-button", function () {
+    $(this).parent().parent().css("display", "none");
+
+});
