@@ -65,6 +65,28 @@
                 <button id ="next-button" class="btn btn--next">okay</button>
             </div>
         </div>
+        <div class="modal modal--win" data-result="totalWins">
+            <div class="modal-content modal-content--win">
+                <h3 class="modal-heading">You Win!</h3>
+                <div id="score">
+                    <p class="win-score"></p>
+                    <p class="lose-score"></p>
+                    <p class="tie-score"></p>
+                </div>
+                <button class="btn btn--new-game">New Game</button>
+            </div>
+        </div>
+        <div class="modal modal--lose" data-result="totalLosses">
+            <div class="modal-content modal-content--win">
+                <h3 class="modal-heading">You Lost</h3>
+                <div id="score">
+                    <p class="win-score"></p>
+                    <p class="lose-score"></p>
+                    <p class="tie-score"></p>
+                </div>
+                <button class="btn btn--new-game">New Game</button>
+            </div>
+        </div>
     </div>
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/app.js"></script>

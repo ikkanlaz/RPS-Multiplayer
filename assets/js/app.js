@@ -41,6 +41,28 @@ function hideModalForInvitation() {
 }
 
 function displayScoreModal() {
+    console.log("show score modal");
+    $(".win-score").text("Wins: " + win);
+    $(".lose-score").text("Losses: " + lose);
+    $(".tie-score").text("Ties: " + tie);
+    $(".modal--score").css("display", "block");
+}
+function displayWinModal() {
+    console.log("show win modal");
+    $(".win-score").text("Wins: " + win);
+    $(".lose-score").text("Losses: " + lose);
+    $(".tie-score").text("Ties: " + tie);
+    $(".modal--win").css("display", "block");
+}
+function displayLoseModal() {
+    console.log("show lose modal");
+    $(".win-score").text("Wins: " + win);
+    $(".lose-score").text("Losses: " + lose);
+    $(".tie-score").text("Ties: " + tie);
+    $(".modal--lose").css("display", "block");
+}
+
+function prepareScoreModal() {
     var ref = firebase.database().ref();
     var currentUserObj = firebase.auth().currentUser;
     var scoreQuery = ref.child("users/" + currentUserObj.uid);
@@ -53,18 +75,19 @@ function displayScoreModal() {
         win = snapshot.val().currentGameWins;
         lose = snapshot.val().currentGameLosses;
         tie = snapshot.val().currentGameTies;
+
     }).then(function () {
-        console.log("show score modal");
-        $(".win-score").text("Wins: " + win);
-        $(".lose-score").text("Losses: " + lose);
-        $(".tie-score").text("Ties: " + tie);
-        $(".modal--score").css("display", "block");
+        if (win > 2) {
+            displayWinModal();
+        } else if (lose > 2) {
+            displayLoseModal();
+        } else {
+            displayScoreModal();
+        }
     }).catch(function (error) {
         console.log("Unable to get score: " + error.message);
         addErrorModal(error.message);
     });
-
-
 }
 
 function hideScoreModal() {
@@ -108,7 +131,6 @@ function removeInviteData() {
 }
 
 function updateScore(keyToBeIncremented) {
-    var opponentUid;
     var currentUserObj = firebase.auth().currentUser;
     console.log(keyToBeIncremented);
 
@@ -117,6 +139,53 @@ function updateScore(keyToBeIncremented) {
     databaseRef.transaction(function (keyToBeIncremented) {
         console.log(keyToBeIncremented);
         return (keyToBeIncremented || 0) + 1;
+    });
+}
+
+function refreshSelections() {
+    var ref = firebase.database().ref();
+    var opponentUid;
+    var currentUserObj = firebase.auth().currentUser;
+
+    var opponentQuery = ref.child("users/" + currentUserObj.uid + "/currentOpponentUid");
+    opponentQuery.once("value", function (snapshot) {
+        console.log(snapshot.val());
+        opponentUid = snapshot.val();
+    }).then(function () {
+        console.log(opponentUid);
+        database.ref('users/' + currentUserObj.uid).update({
+            optionSelected: "",
+            opponentOptionSelected: ""
+        }).then(function () {
+            database.ref('users/' + opponentUid).update({
+                optionSelected: "",
+                opponentOptionSelected: ""
+            }).catch(function (error) {
+                console.log("Unable to update opponents record" + error.message);
+                addErrorModal(error.message);
+            });
+        }).catch(function (error) {
+            console.log("Unable to update own record: " + error.message);
+            addErrorModal(error.message);
+        });
+    });
+}
+
+function endGame() {
+    var userObj = firebase.auth().currentUser;
+
+    database.ref('users/' + userObj.uid).update({
+        inGame: false,
+        inviteReceived: false,
+        inviteSent: false,
+        currentOpponentUid: null,
+        currentGameWins: 0,
+        currentGameLosses: 0,
+        optionSelected: "",
+        opponentOptionSelected: ""
+    }).catch(function (error) {
+        console.log("Unable to refesh own record: " + error.message);
+        addErrorModal(error.message);
     });
 }
 
@@ -144,29 +213,9 @@ function displayResults(optionSelected, opponentOptionSelected) {
     else if (optionSelected === opponentOptionSelected) {
         updateScore("currentGameTies");
     }
-    displayScoreModal();
+    refreshSelections();
+    prepareScoreModal();
 }
-
-// var ref = firebase.database().ref();
-// var currentUserObj = firebase.auth().currentUser;
-// console.log(currentUserObj);
-// var users = ref.child("users");
-// users.once("value", function (snapshot) {
-//     snapshot.forEach(function (user) {
-//         if (user.child("online").val() === true && firebase.auth().currentUser.uid !== user.key) {
-//             $(".user-row").empty();
-//             addUserToOnlineList(user);
-//         }
-//     });
-// });
-// // var invite = ref.child("users/" + firebase.auth().currentUser.uid + "/inviteSent");
-// ref.child("users/" + firebase.auth().currentUser.uid + "/inviteSent").on("value", function (snapshot) {
-//     console.log(snapshot.value);
-//     if (snapshot.value === true) {
-//         $(".modal--invite").css("display", "block");
-//     }
-// })
-
 
 firebase.auth().onAuthStateChanged(function (currentUserObj) {
     if (currentUserObj) {
@@ -330,4 +379,23 @@ $(document).on("click", ".rps-image", function () {
         }
     });
 
+});
+
+$(document).on("click", "#next-button", function () {
+    $(this).parent().parent().css("display", "none");
+    $(".rps-image").css("visibility", "visible");
+    $("#rock").css("visibility", "inherit");
+    $("#paper").css("visibility", "inherit");
+    $("#scissors").css("visibility", "inherit");
+});
+
+$(document).on("click", ".btn--new-game", function () {
+    var result = $(this).parent().parent().data("result");
+    $(this).parent().parent().css("display", "none");
+    $(".rps-image").css("visibility", "visible");
+    $("#rock").css("visibility", "inherit");
+    $("#paper").css("visibility", "inherit");
+    $("#scissors").css("visibility", "inherit");
+    updateScore(result);
+    endGame();
 });
