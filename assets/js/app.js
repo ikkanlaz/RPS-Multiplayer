@@ -40,6 +40,35 @@ function hideModalForInvitation() {
     $(".modal--invite").css("display", "none");
 }
 
+function displayScoreModal() {
+    var ref = firebase.database().ref();
+    var currentUserObj = firebase.auth().currentUser;
+    var scoreQuery = ref.child("users/" + currentUserObj.uid);
+    var win = 0;
+    var lose = 0;
+    var tie = 0;
+    scoreQuery.once("value", function (snapshot) {
+        console.log(snapshot.val());
+        win = snapshot.currentGameWins.val();
+        lose = snapshot.currentGameLosses.val();
+        tie = snapshot.currentGameTies.val();
+    }).then(function () {
+        $(".win-score").text("Wins: " + win);
+        $(".lose-score").text("Losses: " + lose);
+        $(".tie-score").text("Ties: " + tie);
+        $(".modal--score").css("display", "block");
+    }).catch(function (error) {
+        console.log("Unable to get score: " + error.message);
+        addErrorModal(error.message);
+    });
+
+
+}
+
+function hideScoreModal() {
+    $(".modal--score").css("display", "none");
+}
+
 function loadGameScreen() {
     $("#rps-images").css("display", "block");
     $(".game-title").text("select one");
@@ -113,6 +142,7 @@ function displayResults(optionSelected, opponentOptionSelected) {
     else if (optionSelected === opponentOptionSelected) {
         updateScore("currentGameTies");
     }
+
 }
 
 // var ref = firebase.database().ref();

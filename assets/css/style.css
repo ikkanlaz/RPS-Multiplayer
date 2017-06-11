@@ -92,16 +92,21 @@ input:focus {
 }
 
 .modal--error {
-    z-index: 3;
+    z-index: 4;
     display: none;
 }
 
 .modal--invite {
-    z-index: 2;
+    z-index: 3;
     display: none;
 }
 
 .modal--invite-sent {
+    z-index: 3;
+    display: none;
+}
+
+.modal--score {
     z-index: 2;
     display: none;
 }
@@ -129,6 +134,11 @@ input:focus {
 }
 
 .modal-content--invite-sent {
+    width: 95%;
+    max-width: 400px;
+}
+
+.modal-content--score {
     width: 95%;
     max-width: 400px;
 }
