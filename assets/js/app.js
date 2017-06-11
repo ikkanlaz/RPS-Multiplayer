@@ -42,6 +42,36 @@ function loadGameScreen() {
     $(".game-title").text("select one");
 }
 
+function removeInviteData(){
+     var ref = firebase.database().ref();
+    var opponentUid;
+    var currentUserObj = firebase.auth().currentUser;
+
+    var opponentQuery = ref.child("users/" + currentUserObj.uid + "/currentOpponentUid");
+    opponentQuery.once("value", function (snapshot) {
+        console.log(snapshot.val());
+        opponentUid = snapshot.val();
+    }).then(function () {
+        console.log(opponentUid);
+        database.ref('users/' + opponentUid).update({
+            inviteReceived: false,
+            inviteSent: false,
+            currentOpponentUid: null
+        }).then(function () {
+            database.ref('users/' + currentUserObj.uid).update({
+                inviteReceived: false,
+                inviteSent: false,
+                currentOpponentUid: null
+            }).catch(function (error) {
+                console.log("Unable to update opponents record" + error.message);
+                addErrorModal(error.message);
+            });
+        }).catch(function (error) {
+            console.log("Unable to update own record: " + error.message);
+            addErrorModal(error.message);
+        });
+    });
+}
 
 // var ref = firebase.database().ref();
 // var currentUserObj = firebase.auth().currentUser;
@@ -78,13 +108,24 @@ firebase.auth().onAuthStateChanged(function (currentUserObj) {
                 }
             });
         });
-        var invite = ref.child("users/" + currentUserObj.uid + "/inviteReceived");
-        invite.on("value", function (snapshot) {
+        var inviteReceived = ref.child("users/" + currentUserObj.uid + "/inviteReceived");
+        inviteReceived.on("value", function (snapshot) {
             console.log(snapshot.val());
             if (snapshot.val() === true) {
                 displayInvitation();
+            } else {
+                hideInvitationModal();
             }
         });
+
+        var inviteSent = ref.child("users/" + currentUserObj.uid + "/inviteSent");
+        inviteSent.on("value", function (snapshot) {
+            console.log(snapshot.val());
+            if (snapshot.val() === false) {
+                hideInvitationModal();
+            }
+        });
+
 
         var inGame = ref.child("users/" + currentUserObj.uid + "/inGame");
         inGame.on("value", function (snapshot) {
