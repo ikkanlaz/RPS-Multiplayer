@@ -32,8 +32,11 @@ function displayModalForSentInvitation() {
     $(".modal--invite-sent").css("display", "block");
 }
 
-function hideInvitationModal() {
+function hideModalForSentInvitation() {
     $(".modal--invite-sent").css("display", "none");
+}
+
+function hideModalForInvitation() {
     $(".modal--invite").css("display", "none");
 }
 
@@ -114,8 +117,8 @@ firebase.auth().onAuthStateChanged(function (currentUserObj) {
             if (snapshot.val() === true) {
                 displayInvitation();
             } else {
-                console.log("hiding invitation modals");
-                hideInvitationModal();
+                console.log("hiding invitation modal");
+                hideModalForInvitation();
             }
         });
 
@@ -125,8 +128,8 @@ firebase.auth().onAuthStateChanged(function (currentUserObj) {
             if (snapshot.val() === true) {
                 displayModalForSentInvitation();
             } else {
-                console.log("hiding invitation modals");
-                hideInvitationModal();
+                console.log("hiding sent invitation modal");
+                hideModalForSentInvitation();
             }
         });
 
