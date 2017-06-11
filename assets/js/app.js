@@ -95,6 +95,11 @@ function loadGameScreen() {
     $(".game-title").text("Select One");
 }
 
+function loadMenuScree() {
+    $("#rps-images").css("display", "none");
+    $(".game-title").text("Select A User To Start");
+}
+
 function removeInviteData() {
     var ref = firebase.database().ref();
     var opponentUid;
@@ -162,6 +167,7 @@ function endGame() {
         currentOpponentUid: null,
         currentGameWins: 0,
         currentGameLosses: 0,
+        currentGameTies: 0,
         optionSelected: "",
         opponentOptionSelected: ""
     }).catch(function (error) {
