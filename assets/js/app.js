@@ -70,8 +70,6 @@ function prepareScoreModal() {
     var lose = 0;
     var tie = 0;
     scoreQuery.once("value", function (snapshot) {
-        console.log(snapshot.val());
-        console.log(snapshot.val().currentGameWins);
         win = snapshot.val().currentGameWins;
         lose = snapshot.val().currentGameLosses;
         tie = snapshot.val().currentGameTies;
@@ -94,7 +92,7 @@ function hideScoreModal() {
 
 function loadGameScreen() {
     $("#rps-images").css("display", "block");
-    $(".game-title").text("select one");
+    $(".game-title").text("Select One");
 }
 
 function removeInviteData() {
@@ -104,10 +102,8 @@ function removeInviteData() {
 
     var opponentQuery = ref.child("users/" + currentUserObj.uid + "/currentOpponentUid");
     opponentQuery.once("value", function (snapshot) {
-        console.log(snapshot.val());
         opponentUid = snapshot.val();
     }).then(function () {
-        console.log(opponentUid);
         database.ref('users/' + opponentUid).update({
             inviteReceived: false,
             inviteSent: false,
@@ -130,12 +126,9 @@ function removeInviteData() {
 
 function updateScore(keyToBeIncremented) {
     var currentUserObj = firebase.auth().currentUser;
-    console.log(keyToBeIncremented);
 
     var databaseRef = firebase.database().ref('users').child(currentUserObj.uid).child(keyToBeIncremented);
-    console.log(databaseRef);
     databaseRef.transaction(function (keyToBeIncremented) {
-        console.log(keyToBeIncremented);
         return (keyToBeIncremented || 0) + 1;
     });
 }
@@ -147,21 +140,11 @@ function refreshSelections() {
 
     var opponentQuery = ref.child("users/" + currentUserObj.uid + "/currentOpponentUid");
     opponentQuery.once("value", function (snapshot) {
-        console.log(snapshot.val());
         opponentUid = snapshot.val();
     }).then(function () {
-        console.log(opponentUid);
         database.ref('users/' + currentUserObj.uid).update({
             optionSelected: "",
             opponentOptionSelected: ""
-            // }).then(function () {
-            //     database.ref('users/' + opponentUid).update({
-            //         optionSelected: "",
-            //         opponentOptionSelected: ""
-            //     }).catch(function (error) {
-            //         console.log("Unable to update opponents record" + error.message);
-            //         addErrorModal(error.message);
-            //     });
         }).catch(function (error) {
             console.log("Unable to update own record: " + error.message);
             addErrorModal(error.message);
@@ -218,7 +201,6 @@ firebase.auth().onAuthStateChanged(function (currentUserObj) {
     if (currentUserObj) {
         var ref = firebase.database().ref();
         var currentUserObj = firebase.auth().currentUser;
-        console.log(currentUserObj);
         var users = ref.child("users");
         users.once("value", function (snapshot) {
             snapshot.forEach(function (user) {
@@ -230,7 +212,6 @@ firebase.auth().onAuthStateChanged(function (currentUserObj) {
         });
         var inviteReceived = ref.child("users/" + currentUserObj.uid + "/inviteReceived");
         inviteReceived.on("value", function (snapshot) {
-            console.log(snapshot.val());
             if (snapshot.val() === true) {
                 displayInvitation();
             } else {
@@ -302,10 +283,8 @@ $(document).on("click", "#accept-invitation-button", function () {
 
     var opponentQuery = ref.child("users/" + currentUserObj.uid + "/currentOpponentUid");
     opponentQuery.once("value", function (snapshot) {
-        console.log(snapshot.val());
         opponentUid = snapshot.val();
     }).then(function () {
-        console.log(opponentUid);
         database.ref('users/' + currentUserObj.uid).update({
             inGame: true,
             inviteReceived: false,
@@ -348,10 +327,8 @@ $(document).on("click", ".rps-image", function () {
 
     var opponentQuery = ref.child("users/" + currentUserObj.uid + "/currentOpponentUid");
     opponentQuery.once("value", function (snapshot) {
-        console.log(snapshot.val());
         opponentUid = snapshot.val();
     }).then(function () {
-        console.log(opponentUid);
         database.ref('users/' + currentUserObj.uid).update({
             optionSelected: objectSelectedInput
         }).then(function () {
@@ -367,9 +344,16 @@ $(document).on("click", ".rps-image", function () {
         });
     });
 
+    var opponentSelectionQuery = ref.child("users/" + currentUserObj.uid + "/opponentOptionSelected");
+    opponentSelectionQuery.once("value", function (snapshot) {
+        opponentOptionSelected = snapshot.val();
+        if (opponentOptionSelected==="rock" || opponentOptionSelected ==="paper" || opponentOptionSelected === "scissors") {
+            displayResults(objectSelectedInput, opponentOptionSelected);
+        }
+    });
+
     var opponentReady = ref.child("users/" + currentUserObj.uid + "/opponentOptionSelected");
     opponentReady.on("value", function (snapshot) {
-        console.log(snapshot.val());
         opponentOptionSelected = snapshot.val();
         if (snapshot.val()) {
             displayResults(objectSelectedInput, opponentOptionSelected);
