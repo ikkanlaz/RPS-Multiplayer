@@ -53,6 +53,7 @@ function displayScoreModal() {
         lose = snapshot.currentGameLosses.val();
         tie = snapshot.currentGameTies.val();
     }).then(function () {
+        console.log("show score modal");
         $(".win-score").text("Wins: " + win);
         $(".lose-score").text("Losses: " + lose);
         $(".tie-score").text("Ties: " + tie);
