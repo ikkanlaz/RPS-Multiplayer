@@ -84,7 +84,7 @@ function updateScore(keyToBeIncremented) {
 
     databaseRef.transaction(function (keyToBeIncremented) {
         console.log(keyToBeIncremented);
-        if (keyToBeIncremented) {
+        if (keyToBeIncremented || 0) {
             keyToBeIncremented = keyToBeIncremented + 1;
             console.log(keyToBeIncremented);
         }
