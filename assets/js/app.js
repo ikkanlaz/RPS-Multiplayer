@@ -141,10 +141,13 @@ $(document).on("click", "#accept-invitation-button", function () {
         opponentUid = snapshot.val();
     }).then(function () {
         database.ref('users/' + currentUserObj.uid).update({
-            inGame: true
+            inGame: true,
+            inviteReceived: false,
+            currentOpponentUid: opponentUid
         }).then(function () {
             database.ref('users/' + opponentUid).update({
-                inGame: true
+                inGame: true,
+                inviteSent: false
             }).catch(function (error) {
                 console.log("Unable to update opponents record" + error.message);
                 addErrorModal(error.message);
