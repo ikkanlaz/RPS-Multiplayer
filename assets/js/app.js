@@ -347,18 +347,22 @@ $(document).on("click", ".rps-image", function () {
     var opponentSelectionQuery = ref.child("users/" + currentUserObj.uid + "/opponentOptionSelected");
     opponentSelectionQuery.once("value", function (snapshot) {
         opponentOptionSelected = snapshot.val();
-        if (opponentOptionSelected==="rock" || opponentOptionSelected ==="paper" || opponentOptionSelected === "scissors") {
+        if (opponentOptionSelected === "rock" || opponentOptionSelected === "paper" || opponentOptionSelected === "scissors") {
             displayResults(objectSelectedInput, opponentOptionSelected);
+        } else {
+            var opponentReady = ref.child("users/" + currentUserObj.uid + "/opponentOptionSelected");
+
+            opponentReady.on("value", function (snapshot) {
+                opponentOptionSelected = snapshot.val();
+                if (snapshot.val()) {
+                    displayResults(objectSelectedInput, opponentOptionSelected);
+                    opponentReady.off();
+                }
+            });
         }
     });
 
-    var opponentReady = ref.child("users/" + currentUserObj.uid + "/opponentOptionSelected");
-    opponentReady.on("value", function (snapshot) {
-        opponentOptionSelected = snapshot.val();
-        if (snapshot.val()) {
-            displayResults(objectSelectedInput, opponentOptionSelected);
-        }
-    });
+
 
 });
 
