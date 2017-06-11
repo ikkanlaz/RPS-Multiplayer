@@ -211,7 +211,6 @@ firebase.auth().onAuthStateChanged(function (currentUserObj) {
         users.once("value", function (snapshot) {
             snapshot.forEach(function (user) {
                 if (user.child("online").val() === true && currentUserObj.uid !== user.key) {
-                    $(".user-row").empty();
                     addUserToOnlineList(user);
                 }
             });
