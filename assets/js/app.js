@@ -225,6 +225,7 @@ $(document).on("click", ".rps-image", function () {
     var opponentOptionSelected;
     var opponentUid;
     var currentUserObj = firebase.auth().currentUser;
+    var ref = firebase.database().ref();
 
     var opponentQuery = ref.child("users/" + currentUserObj.uid + "/currentOpponentUid");
     opponentQuery.once("value", function (snapshot) {
