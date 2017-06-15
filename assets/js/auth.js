@@ -153,15 +153,6 @@ $("#btn-log-out").on("click", function () {
     auth.signOut();
 });
 
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "https://maps.googleapis.com/maps/api/geocode/json?address=94105&key=AIzaSyBxgMHK10T-YS90r9OQhsSJm_aeEFAGcZ8",
-  "method": "GET"
-}
 
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 
 
