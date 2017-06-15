@@ -157,11 +157,7 @@ var settings = {
   "async": true,
   "crossDomain": true,
   "url": "https://maps.googleapis.com/maps/api/geocode/json?address=94105&key=AIzaSyBxgMHK10T-YS90r9OQhsSJm_aeEFAGcZ8",
-  "method": "GET",
-  "headers": {
-    "cache-control": "no-cache",
-    "postman-token": "7d413731-c7a3-3135-2d0b-df2b1d404bf1"
-  }
+  "method": "GET"
 }
 
 $.ajax(settings).done(function (response) {
